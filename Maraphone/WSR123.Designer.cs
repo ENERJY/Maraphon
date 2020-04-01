@@ -20,7 +20,7 @@ namespace Maraphone {
     [global::System.ComponentModel.DesignerCategoryAttribute("code")]
     [global::System.ComponentModel.ToolboxItem(true)]
     [global::System.Xml.Serialization.XmlSchemaProviderAttribute("GetTypedDataSetSchema")]
-    [global::System.Xml.Serialization.XmlRootAttribute("MaraphonDataSet")]
+    [global::System.Xml.Serialization.XmlRootAttribute("WSR123")]
     [global::System.ComponentModel.Design.HelpKeywordAttribute("vs.data.DataSet")]
     public partial class WSR123 : global::System.Data.DataSet {
         
@@ -631,9 +631,9 @@ namespace Maraphone {
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "16.0.0.0")]
         private void InitClass() {
-            this.DataSetName = "MaraphonDataSet";
+            this.DataSetName = "WSR123";
             this.Prefix = "";
-            this.Namespace = "http://tempuri.org/MaraphonDataSet.xsd";
+            this.Namespace = "http://tempuri.org/WSR123.xsd";
             this.EnforceConstraints = true;
             this.SchemaSerializationMode = global::System.Data.SchemaSerializationMode.IncludeSchema;
             this.tableCharity = new CharityDataTable();
@@ -8854,7 +8854,7 @@ namespace Maraphone {
         }
     }
 }
-namespace Maraphone.MaraphonDataSetTableAdapters {
+namespace Maraphone.WSR123TableAdapters {
     
     
     /// <summary>

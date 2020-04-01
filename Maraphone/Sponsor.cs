@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Data.SqlClient;
 
 namespace Maraphone
 {
@@ -33,15 +34,21 @@ namespace Maraphone
         private TextBox textBox6;
         private Timer timer1;
         private IContainer components;
+        private ComboBox comboBox1;
         private Button button2;
-        private TextBox textBox7;
 
         public Sponsor()
         {
             InitializeComponent();
         }
-
-        private void InitializeComponent()
+        private void check()
+        {
+            if (textBox1.Text == "" | textBox3.Text == "" | textBox4.Text == "" | textBox6.Text == "" | textBox2.Text == "" | comboBox1.Text == "")
+                button2.Enabled = false;
+            else
+                button2.Enabled = true;
+        }
+            private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
@@ -63,9 +70,9 @@ namespace Maraphone
             this.textBox4 = new System.Windows.Forms.TextBox();
             this.textBox5 = new System.Windows.Forms.TextBox();
             this.textBox6 = new System.Windows.Forms.TextBox();
-            this.textBox7 = new System.Windows.Forms.TextBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.button2 = new System.Windows.Forms.Button();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -216,6 +223,7 @@ namespace Maraphone
             this.label11.Size = new System.Drawing.Size(185, 14);
             this.label11.TabIndex = 12;
             this.label11.Text = "Сколько вы готовы пожертвовать";
+            this.label11.Click += new System.EventHandler(this.label11_Click);
             // 
             // textBox1
             // 
@@ -235,11 +243,11 @@ namespace Maraphone
             // 
             // textBox3
             // 
-            this.textBox3.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.textBox3.Location = new System.Drawing.Point(97, 223);
+            this.textBox3.Location = new System.Drawing.Point(97, 226);
             this.textBox3.Name = "textBox3";
             this.textBox3.Size = new System.Drawing.Size(161, 20);
-            this.textBox3.TabIndex = 15;
+            this.textBox3.TabIndex = 21;
+            this.textBox3.TextChanged += new System.EventHandler(this.textBox3_TextChanged);
             // 
             // textBox4
             // 
@@ -252,10 +260,11 @@ namespace Maraphone
             // textBox5
             // 
             this.textBox5.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.textBox5.Location = new System.Drawing.Point(97, 299);
+            this.textBox5.Location = new System.Drawing.Point(523, 302);
             this.textBox5.Name = "textBox5";
             this.textBox5.Size = new System.Drawing.Size(161, 20);
             this.textBox5.TabIndex = 17;
+            this.textBox5.TextChanged += new System.EventHandler(this.textBox5_TextChanged);
             // 
             // textBox6
             // 
@@ -264,14 +273,7 @@ namespace Maraphone
             this.textBox6.Name = "textBox6";
             this.textBox6.Size = new System.Drawing.Size(161, 20);
             this.textBox6.TabIndex = 18;
-            // 
-            // textBox7
-            // 
-            this.textBox7.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.textBox7.Location = new System.Drawing.Point(555, 295);
-            this.textBox7.Name = "textBox7";
-            this.textBox7.Size = new System.Drawing.Size(100, 20);
-            this.textBox7.TabIndex = 19;
+            this.textBox6.TextChanged += new System.EventHandler(this.textBox6_TextChanged);
             // 
             // timer1
             // 
@@ -289,12 +291,20 @@ namespace Maraphone
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
+            // comboBox1
+            // 
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Location = new System.Drawing.Point(98, 299);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(160, 21);
+            this.comboBox1.TabIndex = 22;
+            // 
             // Sponsor
             // 
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(60)))), ((int)(((byte)(60)))), ((int)(((byte)(60)))));
             this.ClientSize = new System.Drawing.Size(795, 458);
+            this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.button2);
-            this.Controls.Add(this.textBox7);
             this.Controls.Add(this.textBox6);
             this.Controls.Add(this.textBox5);
             this.Controls.Add(this.textBox4);
@@ -315,6 +325,7 @@ namespace Maraphone
             this.Controls.Add(this.time1);
             this.Controls.Add(this.pictureBox1);
             this.Name = "Sponsor";
+            this.Load += new System.EventHandler(this.Sponsor_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -367,5 +378,95 @@ namespace Maraphone
         {
 
         }
+
+        private void textBox7_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void Sponsor_Load(object sender, EventArgs e)
+        {
+            using (SqlConnection con = new SqlConnection(Maraphone.Properties.Settings.Default.MaraphonConnectionString))
+            {
+                using (SqlConnection conn = new SqlConnection
+                (Maraphone.Properties.Settings.Default.MaraphonConnectionString))
+                {
+                    conn.Open();
+                    SqlCommand cmd = conn.CreateCommand();
+                    cmd.CommandText = "SELECT [User].FirstName+''+[User].LastName+''+CONVERT(varchar20)," +
+                    "RegistrationEvent.BibNumber)+'('+Runner.CountryCode+')AS" +
+                    "Registration FROM Runner INNER JOIN [User] ON Runner.Email = [User].Email INNER JOIN" +
+                    "Registration ON Runner.Runnerld = Registration.Runnerld INNER JOIN RegistrationEvent ON" +
+                    "Registration.Restrationld = RegistrationEvent.Registrationld WHERE([User].Roleld=N'R')";
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        comboBox1.Items.Add(reader[0]);
+                    }
+                    conn.Close();
+                }
+                using (SqlConnection conn = new SqlConnection(Maraphone.Properties.Settings.Default.MaraphonConnectionString))
+                {
+                    conn.Open();
+                    SqlCommand cmd = conn.CreateCommand();
+                    cmd.CommandText = "SELECT CharityName FROM Charity";
+                    SqlDataReader reader = cmd.ExecuteReader();
+                    while (reader.Read())
+                    {
+                        comboBox1.Items.Add(reader[0]);
+                    }
+                    conn.Close();
+                }
+            }
+
+        }
+
+        private void textBox5_TextChanged(object sender, EventArgs e)
+        {
+            {
+                if (textBox5.TextLength == 0) textBox5.Text = "0";
+                label11.Text = textBox5.Text;
+                if (Convert.ToInt32(textBox5.Text) <= 0)
+                {
+                    MessageBox.Show("Вы должны пожертвовать хотя бы 1$");
+                    button2.Enabled = false;
+                }
+                else
+                {
+                    button2.Enabled = true;
+                }
+            }
+        }
+
+        private void label11_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox3_TextChanged(object sender, EventArgs e)
+        {
+            {
+                if
+                (textBox3.TextLength != 16)
+                    textBox3.BackColor = Color.Red;
+                else
+                    textBox3.BackColor = Color.White;
+                textBox3.MaxLength = 16;
+            }
+        }
+
+        private void textBox6_TextChanged(object sender, EventArgs e)
+        {
+            {
+                if (textBox6.TextLength != 3)
+                    textBox6.BackColor = Color.Red;
+                else
+                    textBox6.BackColor = Color.White;
+                textBox6.MaxLength = 3;
+            }
+        }
     }
 }
+
+    
+

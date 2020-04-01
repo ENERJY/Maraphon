@@ -10,21 +10,26 @@ using System.Windows.Forms;
 
 namespace Maraphone
 {
-    public partial class Main : Form
+    public partial class Info : Form
     {
-        public Main()
+        public Info()
         {
             InitializeComponent();
         }
 
-        private void label3_Click(object sender, EventArgs e)
+        private void Info_Load(object sender, EventArgs e)
+        {
+           
+        }
+
+        private void time1_Click(object sender, EventArgs e)
         {
             TimeSpan time1;
             DateTime initial_time = Convert.ToDateTime(" 21.10.2017 6:00 ");
             DateTime current_time = DateTime.Now;
             time1 = initial_time - current_time;
             this.time1.Text = time1.Days.ToString() + " дней " + time1.Hours.ToString() + " часов и " + time1.Minutes.ToString() + "минут до старта марафона!";
-            
+
         }
 
         private void label2_Click(object sender, EventArgs e)
@@ -32,36 +37,10 @@ namespace Maraphone
 
         }
 
-        private void label1_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void button4_Click(object sender, EventArgs e)
-        {
-            Login Login = new Login();
-            Login.Show();
-            this.Hide();
-        }
-
-        private void button3_Click(object sender, EventArgs e)
         {
             More More = new More();
             More.Show();
-            this.Hide();
-        }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            Check CheckRunner = new Check();
-            CheckRunner.Show();
-            this.Hide();
-        }
-
-        private void button2_Click(object sender, EventArgs e)
-        {
-            Sponsor Sponsor = new Sponsor();
-            Sponsor.Show();
             this.Hide();
         }
     }

@@ -57,6 +57,70 @@ namespace Maraphone
 
         private void button1_Click(object sender, EventArgs e)
         {
+            int login = 0;
+            string role = "";
+            using (SqlConnection conn = new
+
+            SqlConnection(Maraphone.Properties.Settings.Default.MaraphonConnectionString))
+            {
+                conn.Open();
+                SqlCommand cmd = conn.CreateCommand();
+                cmd.CommandText = "SELECT Count(*) FROM [User] WHERE Email='" +
+                textBox1.Text + "'AND Password = '" + textBox2.Text + "'";
+                SqlDataReader reader = cmd.ExecuteReader();
+                while (reader.Read())
+                {
+                    login = Convert.ToInt32(reader[0]);
+                }
+                conn.Close();
+                conn.Open();
+                SqlCommand cmd1 = conn.CreateCommand();
+                cmd1.CommandText = " SELECT RoleId FROM[User] WHERE Email = '" +
+            textBox1.Text + "'AND Password = '" + textBox2.Text + "'";
+                SqlDataReader reader1 = cmd1.ExecuteReader();
+                while (reader1.Read())
+                {
+                    role = reader1[0].ToString();
+                }
+                conn.Close();
+            }
+            if (login == 1)
+            {
+                
+                if (role == "R")
+                {
+                    Runner Runner = new Runner();
+                    Runner.Show();
+                    this.Hide();
+                }
+                else
+                {
+                    if (role == "A")
+                    {
+                        Admin Admin = new Admin();
+                        Admin.Show();
+                        this.Hide();
+                    }
+                    else
+                    {
+                        if (role == "C")
+{
+                            Coordinat_menu Coordinator = new Coordinat_menu();
+                            Coordinator.Show();
+                            this.Hide();
+                        }
+                    }
+                }
+            }
+            else
+
+            {
+                MessageBox.Show("Не правильный логин/пароль.");
+            }
+        }
+
+        private void Login_Load(object sender, EventArgs e)
+        {
 
         }
     }
