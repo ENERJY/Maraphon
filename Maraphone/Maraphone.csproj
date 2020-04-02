@@ -64,6 +64,12 @@
     <Compile Include="Coordinat menu.Designer.cs">
       <DependentUpon>Coordinat menu.cs</DependentUpon>
     </Compile>
+    <Compile Include="Fond.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Fond.Designer.cs">
+      <DependentUpon>Fond.cs</DependentUpon>
+    </Compile>
     <Compile Include="Info.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -113,6 +119,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Coordinat menu.resx">
       <DependentUpon>Coordinat menu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Fond.resx">
+      <DependentUpon>Fond.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Info.resx">
       <DependentUpon>Info.cs</DependentUpon>

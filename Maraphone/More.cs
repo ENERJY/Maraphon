@@ -42,5 +42,12 @@ namespace Maraphone
             Main.Show();
             this.Hide();
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            Info Info = new Info();
+            Info.Show();
+            this.Hide();
+        }
     }
 }
